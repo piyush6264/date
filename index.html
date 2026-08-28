@@ -1,561 +1,1306 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A Little Question For You 💕</title>
+<title>A Little Question For You ❤️</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: "Poppins", Arial, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3, #c471ed);
-    color: #fff;
+    font-family: 'Poppins', sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.15), transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,.12), transparent 25%),
+        linear-gradient(135deg, #16001f, #5b0a3d, #b51f61, #ff6f91);
+
+    color: white;
 }
 
-/* Floating hearts */
 
-.hearts {
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background {
     position: fixed;
     inset: 0;
-    pointer-events: none;
     overflow: hidden;
+    pointer-events: none;
     z-index: 0;
 }
 
-.heart {
+.orb {
     position: absolute;
-    bottom: -50px;
-    font-size: 25px;
-    animation: floatHeart linear infinite;
-    opacity: 0.7;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: .35;
+    animation: orbMove 10s ease-in-out infinite alternate;
 }
 
-.heart:nth-child(1) {
-    left: 10%;
-    animation-duration: 8s;
+.orb.one {
+    width: 220px;
+    height: 220px;
+    background: #ff5caa;
+    top: 5%;
+    left: -70px;
 }
 
-.heart:nth-child(2) {
-    left: 25%;
-    animation-duration: 11s;
+.orb.two {
+    width: 260px;
+    height: 260px;
+    background: #8d5cff;
+    right: -100px;
+    bottom: 10%;
     animation-delay: 2s;
 }
 
-.heart:nth-child(3) {
-    left: 45%;
-    animation-duration: 9s;
+.orb.three {
+    width: 150px;
+    height: 150px;
+    background: #ffcf70;
+    top: 55%;
+    left: 40%;
+    animation-delay: 4s;
+}
+
+@keyframes orbMove {
+
+    from {
+        transform: translate(0,0) scale(1);
+    }
+
+    to {
+        transform: translate(40px,-30px) scale(1.15);
+    }
+
+}
+
+
+/* =========================================
+   STARS
+========================================= */
+
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    color: white;
+    opacity: .6;
+    animation: twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1) {
+    top: 12%;
+    left: 15%;
+}
+
+.star:nth-child(2) {
+    top: 22%;
+    left: 80%;
+    animation-delay: .5s;
+}
+
+.star:nth-child(3) {
+    top: 65%;
+    left: 10%;
     animation-delay: 1s;
 }
 
-.heart:nth-child(4) {
-    left: 65%;
-    animation-duration: 12s;
-    animation-delay: 3s;
-}
-
-.heart:nth-child(5) {
+.star:nth-child(4) {
+    top: 75%;
     left: 85%;
-    animation-duration: 10s;
-    animation-delay: 2s;
+    animation-delay: 1.5s;
 }
 
-@keyframes floatHeart {
+.star:nth-child(5) {
+    top: 40%;
+    left: 50%;
+    animation-delay: .8s;
+}
+
+@keyframes twinkle {
+
+    from {
+        opacity: .2;
+        transform: scale(.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+
+}
+
+
+/* =========================================
+   FLOATING HEARTS
+========================================= */
+
+.floating-hearts {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -50px;
+    animation: floatUp linear infinite;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+
     0% {
         transform: translateY(0) rotate(0deg);
         opacity: 0;
     }
 
-    20% {
-        opacity: 0.8;
+    15% {
+        opacity: .7;
     }
 
     100% {
         transform: translateY(-110vh) rotate(360deg);
         opacity: 0;
     }
+
 }
 
-/* Main container */
 
-.container {
+/* =========================================
+   MAIN
+========================================= */
+
+.main {
     position: relative;
-    z-index: 2;
+    z-index: 5;
+
     min-height: 100vh;
+
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
     padding: 20px;
 }
 
-/* Card */
+
+/* =========================================
+   CARD
+========================================= */
 
 .card {
     width: 100%;
-    max-width: 430px;
-    padding: 35px 25px;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.17);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.3);
-    box-shadow: 0 20px 60px rgba(70, 0, 50, 0.25);
-    text-align: center;
-    animation: cardAppear 0.7s ease;
+    max-width: 470px;
+    min-height: 620px;
+
+    padding: 38px 28px;
+
+    border-radius: 35px;
+
+    background: rgba(255,255,255,.12);
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.25);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
 }
 
-@keyframes cardAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.85) translateY(30px);
-    }
+.card::before {
+    content: "";
 
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    background: rgba(255,255,255,.08);
+
+    border-radius: 50%;
+
+    top: -130px;
+    right: -100px;
 }
 
-/* Page control */
+
+/* =========================================
+   PAGE
+========================================= */
 
 .page {
     display: none;
+
+    width: 100%;
+
+    text-align: center;
+
+    animation: pageIn .7s ease;
 }
 
 .page.active {
     display: block;
 }
 
-/* Typography */
+@keyframes pageIn {
 
-.emoji {
-    font-size: 70px;
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.big-heart {
+    font-size: 85px;
+
     margin-bottom: 15px;
+
+    display: inline-block;
+
+    filter:
+        drop-shadow(
+            0 10px 20px rgba(255,70,130,.4)
+        );
+
     animation: heartbeat 1.5s infinite;
 }
 
 @keyframes heartbeat {
-    0%, 100% {
+
+    0%,100% {
         transform: scale(1);
     }
 
-    50% {
-        transform: scale(1.12);
+    15% {
+        transform: scale(1.15);
     }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.1);
+    }
+
 }
 
-h1 {
-    font-size: clamp(28px, 8vw, 42px);
-    line-height: 1.15;
+
+/* =========================================
+   TEXT
+========================================= */
+
+.small-title {
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 4px;
+
+    opacity: .8;
+
     margin-bottom: 15px;
 }
 
-h2 {
-    font-size: 28px;
-    margin-bottom: 12px;
-}
+h1 {
+    font-size: clamp(30px, 8vw, 46px);
 
-p {
-    font-size: 16px;
-    line-height: 1.6;
-    opacity: 0.95;
-}
+    line-height: 1.12;
 
-/* Buttons */
+    margin-bottom: 18px;
 
-.buttons {
-    position: relative;
-    height: 130px;
-    margin-top: 30px;
-}
-
-button {
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-family: inherit;
     font-weight: 700;
-    font-size: 17px;
-    border-radius: 50px;
-    padding: 15px 32px;
-    transition: 0.25s ease;
 }
 
-.yes-btn {
-    background: #fff;
-    color: #ff4f81;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+h2 {
+    font-size: clamp(23px, 6vw, 30px);
+
+    margin-bottom: 15px;
 }
 
-.yes-btn:hover {
-    transform: scale(1.08);
+.subtitle {
+    font-size: 16px;
+
+    line-height: 1.8;
+
+    opacity: .9;
 }
 
-.no-btn {
+.handwriting {
+    font-family: 'Caveat', cursive;
+
+    font-size: 30px;
+}
+
+
+/* =========================================
+   BUTTON AREA
+   YES AND NO NEVER OVERLAP
+========================================= */
+
+.button-area {
+    height: 180px;
+
+    margin-top: 30px;
+
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    padding-top: 5px;
+}
+
+
+/* =========================================
+   YES BUTTON
+========================================= */
+
+.yes-button {
+    border: none;
+
+    background: white;
+
+    color: #e22b72;
+
+    padding: 16px 38px;
+
+    border-radius: 100px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.2),
+        0 0 30px rgba(255,255,255,.2);
+
+    transition: .3s ease;
+
+    position: relative;
+
+    z-index: 10;
+}
+
+.yes-button:hover {
+    transform: scale(1.1);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3),
+        0 0 35px rgba(255,255,255,.4);
+}
+
+
+/* =========================================
+   NO BUTTON
+========================================= */
+
+.no-button {
     position: absolute;
-    background: rgba(255,255,255,0.25);
+
+    left: 50%;
+
+    top: 90px;
+
+    transform: translateX(-50%);
+
+    border: 1px solid rgba(255,255,255,.3);
+
+    background: rgba(255,255,255,.08);
+
     color: white;
-    border: 1px solid rgba(255,255,255,0.4);
-    left: 55%;
-    top: 5px;
-    transition: left 0.18s ease, top 0.18s ease;
+
+    padding: 14px 28px;
+
+    border-radius: 100px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        left .15s ease,
+        top .15s ease,
+        transform .15s ease;
+
+    z-index: 9;
 }
 
-/* Date picker */
 
-.date-wrapper {
+/* =========================================
+   DATE PAGE
+========================================= */
+
+.date-box {
     margin-top: 25px;
+}
+
+.date-label {
+    display: block;
+
+    font-size: 14px;
+
+    opacity: .8;
+
+    margin-bottom: 10px;
 }
 
 .date-input {
     width: 100%;
-    padding: 17px;
-    border-radius: 16px;
-    border: none;
-    outline: none;
-    background: rgba(255,255,255,0.95);
-    color: #ff4f81;
-    font-size: 17px;
-    font-family: inherit;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-}
 
-.date-input::-webkit-calendar-picker-indicator {
+    height: 58px;
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,.95);
+
+    color: #b51f61;
+
+    padding: 0 18px;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.15);
+
     cursor: pointer;
 }
 
-.continue-btn {
-    margin-top: 22px;
-    background: #fff;
-    color: #ff4f81;
+.confirm-button {
     width: 100%;
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #ffe8f0
+        );
+
+    color: #b51f61;
+
+    font-family: inherit;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .3s ease;
 }
 
-.continue-btn:hover {
+.confirm-button:hover {
     transform: translateY(-3px);
 }
 
-/* Success page */
 
-.success-heart {
+/* =========================================
+   FINAL PAGE
+========================================= */
+
+.celebration {
     font-size: 90px;
-    animation: successPop 1s ease infinite alternate;
+
+    animation:
+        celebration
+        1.5s ease-in-out
+        infinite alternate;
 }
 
-@keyframes successPop {
+@keyframes celebration {
+
     from {
-        transform: scale(1);
+        transform:
+            scale(1)
+            rotate(-4deg);
     }
 
     to {
-        transform: scale(1.15) rotate(5deg);
+        transform:
+            scale(1.12)
+            rotate(4deg);
     }
+
 }
 
-.date-result {
-    margin: 22px 0;
-    padding: 18px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.2);
-    font-size: 20px;
+.selected-date {
+    margin: 25px 0;
+
+    padding: 20px;
+
+    border-radius: 22px;
+
+    background: rgba(255,255,255,.12);
+
+    border: 1px solid rgba(255,255,255,.2);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.2);
+}
+
+.selected-date .label {
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    opacity: .7;
+}
+
+.selected-date .date {
+    font-size: 23px;
+
     font-weight: 700;
+
+    margin-top: 7px;
 }
 
-.love-message {
-    font-size: 17px;
-    line-height: 1.8;
+.message {
+    line-height: 1.9;
+
+    font-size: 16px;
 }
 
-/* Confetti */
+.signature {
+    margin-top: 25px;
+
+    font-family: 'Caveat', cursive;
+
+    font-size: 32px;
+}
+
+
+/* =========================================
+   CONFETTI
+========================================= */
 
 .confetti {
     position: fixed;
-    width: 10px;
-    height: 10px;
-    top: -20px;
-    z-index: 10;
-    animation: fall 4s linear forwards;
+
+    top: -30px;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    animation:
+        confettiFall
+        4s linear forwards;
 }
 
-@keyframes fall {
+@keyframes confettiFall {
+
     0% {
-        transform: translateY(0) rotate(0deg);
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 1;
     }
 
     100% {
-        transform: translateY(110vh) rotate(720deg);
+        transform:
+            translateY(110vh)
+            rotate(720deg);
+
+        opacity: 0;
     }
+
 }
 
-/* Mobile */
 
-@media (max-width: 480px) {
+/* =========================================
+   MOBILE
+========================================= */
 
-    .container {
-        padding: 15px;
+@media (max-width: 600px) {
+
+    .main {
+        padding: 12px;
     }
 
     .card {
-        padding: 30px 20px;
-        border-radius: 25px;
+        min-height: 650px;
+
+        padding: 35px 20px;
+
+        border-radius: 30px;
     }
 
-    .emoji {
-        font-size: 60px;
+    .big-heart {
+        font-size: 70px;
     }
 
     h1 {
-        font-size: 30px;
+        font-size: 32px;
     }
 
     h2 {
-        font-size: 25px;
+        font-size: 24px;
     }
 
-    p {
-        font-size: 15px;
+    .subtitle {
+        font-size: 14px;
     }
 
-    .buttons {
-        height: 145px;
+    .button-area {
+        height: 180px;
     }
 
-    button {
-        font-size: 16px;
-        padding: 14px 25px;
+    .yes-button {
+        padding: 15px 32px;
     }
+
+    .no-button {
+        padding: 13px 24px;
+    }
+
+    .celebration {
+        font-size: 75px;
+    }
+
+}
+
+
+/* =========================================
+   EXTRA SMALL
+========================================= */
+
+@media (max-width: 360px) {
+
+    .card {
+        padding: 30px 16px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+
+    .big-heart {
+        font-size: 60px;
+    }
+
 }
 </style>
 </head>
 
+
 <body>
 
-<!-- Floating hearts -->
 
-<div class="hearts">
-    <div class="heart">💕</div>
-    <div class="heart">💗</div>
-    <div class="heart">💖</div>
-    <div class="heart">💓</div>
-    <div class="heart">💕</div>
+<!-- =========================================
+     BACKGROUND
+========================================= -->
+
+<div class="background">
+
+    <div class="orb one"></div>
+
+    <div class="orb two"></div>
+
+    <div class="orb three"></div>
+
 </div>
 
 
-<div class="container">
+<!-- =========================================
+     STARS
+========================================= -->
 
-    <div class="card">
+<div class="stars">
 
-        <!-- PAGE 1 -->
+    <div class="star">✦</div>
 
-        <section class="page active" id="page1">
+    <div class="star">✧</div>
 
-            <div class="emoji">🥰</div>
+    <div class="star">✦</div>
 
-            <h1>
-                I Have A Little Question...
-            </h1>
+    <div class="star">✧</div>
 
-            <p>
-                And honestly... I've been waiting to ask you this.
-                ❤️
-            </p>
+    <div class="star">✦</div>
 
-            <br>
-
-            <h2>
-                Will you go on a date with me? 💕
-            </h2>
-
-            <div class="buttons">
-
-                <button
-                    class="yes-btn"
-                    onclick="showPage(2)">
-                    YES 💖
-                </button>
-
-                <button
-                    class="no-btn"
-                    id="noButton">
-                    No 😏
-                </button>
-
-            </div>
-
-        </section>
+</div>
 
 
-        <!-- PAGE 2 -->
+<!-- =========================================
+     FLOATING HEARTS
+========================================= -->
 
-        <section class="page" id="page2">
+<div class="floating-hearts">
 
-            <div class="emoji">📅</div>
+    <span
+        class="floating-heart"
+        style="left:5%;animation-duration:9s;">
+        ♡
+    </span>
 
-            <h1>
-                Yayyy! 💕
-            </h1>
+    <span
+        class="floating-heart"
+        style="left:15%;animation-duration:12s;">
+        ♥
+    </span>
 
-            <p>
-                I knew you'd say yes! 😌
-            </p>
+    <span
+        class="floating-heart"
+        style="left:28%;animation-duration:10s;">
+        ♡
+    </span>
 
-            <p style="margin-top:10px;">
-                Now tell me...
-                <br>
-                <strong>When are you free for our date?</strong>
-            </p>
+    <span
+        class="floating-heart"
+        style="left:42%;animation-duration:13s;">
+        ♥
+    </span>
 
-            <div class="date-wrapper">
+    <span
+        class="floating-heart"
+        style="left:57%;animation-duration:9s;">
+        ♡
+    </span>
 
-                <input
-                    type="date"
-                    id="dateInput"
-                    class="date-input">
+    <span
+        class="floating-heart"
+        style="left:70%;animation-duration:11s;">
+        ♥
+    </span>
 
-                <button
-                    class="continue-btn"
-                    onclick="confirmDate()">
-                    That's My Date 💕
-                </button>
+    <span
+        class="floating-heart"
+        style="left:84%;animation-duration:13s;">
+        ♡
+    </span>
 
-            </div>
+    <span
+        class="floating-heart"
+        style="left:94%;animation-duration:10s;">
+        ♥
+    </span>
 
-        </section>
+</div>
 
 
-        <!-- PAGE 3 -->
+<!-- =========================================
+     MAIN
+========================================= -->
 
-        <section class="page" id="page3">
+<main class="main">
 
-            <div class="success-heart">
-                💖
-            </div>
+<div class="card">
 
-            <h1>
-                It's A Date! 🎉
-            </h1>
 
-            <p>
-                Okay, it's officially happening!
-                🥰
-            </p>
+<!-- =========================================
+     PAGE 1
+========================================= -->
 
-            <div class="date-result">
-                📅 <span id="selectedDate"></span>
-            </div>
+<section
+    class="page active"
+    id="page1">
 
-            <div class="love-message">
+    <div class="big-heart">
+        💌
+    </div>
 
-                <p>
-                    I promise I'll make it a date worth remembering. ❤️
-                </p>
+    <div class="small-title">
+        A little something for you
+    </div>
 
-                <br>
+    <h1>
+        I Have A<br>
+        Question For You...
+    </h1>
 
-                <p>
-                    Good food 🍕<br>
-                    Good conversations 🥰<br>
-                    Lots of laughs 😂<br>
-                    And hopefully... a little bit of romance 💕
-                </p>
+    <p class="subtitle">
+        I've been thinking about this for a while
+        and finally decided to ask. 🥹
+    </p>
 
-                <br>
+    <br>
 
-                <strong>
-                    Can't wait to see you! ❤️
-                </strong>
+    <h2>
+        Will you go on a date with me? ❤️
+    </h2>
 
-            </div>
+    <p class="handwriting">
+        Be honest... 👀
+    </p>
 
-        </section>
+
+    <div class="button-area">
+
+        <button
+            class="yes-button"
+            onclick="showPage(2)">
+            Yes, absolutely! 💖
+        </button>
+
+
+        <button
+            class="no-button"
+            id="noButton">
+            No 😏
+        </button>
 
     </div>
 
+</section>
+
+
+<!-- =========================================
+     PAGE 2
+========================================= -->
+
+<section
+    class="page"
+    id="page2">
+
+    <div class="big-heart">
+        🥰
+    </div>
+
+    <div class="small-title">
+        I knew it!
+    </div>
+
+    <h1>
+        You Said YES! 💕
+    </h1>
+
+    <p class="subtitle">
+
+        Okay... now comes the important part.
+
+        <br>
+
+        When are you free? 👀
+
+    </p>
+
+
+    <div class="date-box">
+
+        <label class="date-label">
+            Pick a day for our date
+        </label>
+
+
+        <input
+            type="date"
+            id="dateInput"
+            class="date-input">
+
+
+        <button
+            class="confirm-button"
+            onclick="confirmDate()">
+
+            This Is The Day ❤️
+
+        </button>
+
+    </div>
+
+
+    <br>
+
+
+    <p class="handwriting">
+        Choose wisely... it's our day. 🌹
+    </p>
+
+</section>
+
+
+<!-- =========================================
+     PAGE 3
+========================================= -->
+
+<section
+    class="page"
+    id="page3">
+
+    <div class="celebration">
+        💖
+    </div>
+
+
+    <div class="small-title">
+        Official announcement
+    </div>
+
+
+    <h1>
+        It's A Date! 🎉
+    </h1>
+
+
+    <p class="subtitle">
+
+        I think this just became my favorite date.
+
+        ❤️
+
+    </p>
+
+
+    <div class="selected-date">
+
+        <div class="label">
+            Our Date
+        </div>
+
+
+        <div
+            class="date"
+            id="selectedDate">
+        </div>
+
+    </div>
+
+
+    <div class="message">
+
+        <p>
+            Good food 🍕
+        </p>
+
+        <p>
+            Great conversations 🥰
+        </p>
+
+        <p>
+            Lots of laughing 😂
+        </p>
+
+        <p>
+            And hopefully...
+            some unforgettable memories. ✨
+        </p>
+
+    </div>
+
+
+    <div class="signature">
+        Can't wait to see you ❤️
+    </div>
+
+</section>
+
+
 </div>
+
+</main>
 
 
 <script>
 
-/* =========================
+
+/* =========================================
+   GOOGLE APPS SCRIPT URL
+========================================= */
+
+const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbxWz-dBn4r3uuTzuGRPuI4qLbkLnYMe0CIGXtDXDD1uXwk-LaaPQrGzQdiXnvoiVF1p/exec";
+
+
+/* =========================================
    PAGE NAVIGATION
-========================= */
+========================================= */
 
-function showPage(pageNumber) {
+function showPage(number) {
 
-    document.querySelectorAll(".page").forEach(page => {
+    const pages =
+        document.querySelectorAll(".page");
+
+
+    pages.forEach(page => {
+
         page.classList.remove("active");
+
     });
 
-    document
-        .getElementById("page" + pageNumber)
-        .classList.add("active");
+
+    const target =
+        document.getElementById(
+            "page" + number
+        );
+
+
+    target.classList.add("active");
+
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
+
 }
 
 
-/* =========================
+/* =========================================
    RUNAWAY NO BUTTON
-========================= */
+========================================= */
 
-const noButton = document.getElementById("noButton");
+const noButton =
+    document.getElementById("noButton");
+
 
 function moveNoButton() {
 
-    const container = document.querySelector(".buttons");
+    const area =
+        document.querySelector(".button-area");
 
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
 
-    const buttonWidth = noButton.offsetWidth;
-    const buttonHeight = noButton.offsetHeight;
+    const areaRect =
+        area.getBoundingClientRect();
 
-    const maxX = Math.max(
-        0,
-        containerWidth - buttonWidth
-    );
 
-    const maxY = Math.max(
-        0,
-        containerHeight - buttonHeight
-    );
+    const areaWidth =
+        area.clientWidth;
 
-    const randomX =
-        Math.floor(Math.random() * maxX);
 
-    const randomY =
-        Math.floor(Math.random() * maxY);
+    const areaHeight =
+        area.clientHeight;
 
-    noButton.style.left = randomX + "px";
-    noButton.style.top = randomY + "px";
+
+    const buttonWidth =
+        noButton.offsetWidth;
+
+
+    const buttonHeight =
+        noButton.offsetHeight;
+
+
+    const yesButton =
+        document.querySelector(".yes-button");
+
+
+    const yesRect =
+        yesButton.getBoundingClientRect();
+
+
+    /*
+        Convert YES button position
+        into button-area coordinates.
+    */
+
+    const yesLeft =
+        yesRect.left - areaRect.left;
+
+
+    const yesTop =
+        yesRect.top - areaRect.top;
+
+
+    const yesRight =
+        yesLeft + yesRect.width;
+
+
+    const yesBottom =
+        yesTop + yesRect.height;
+
+
+    const maxX =
+        Math.max(
+            0,
+            areaWidth - buttonWidth
+        );
+
+
+    const maxY =
+        Math.max(
+            0,
+            areaHeight - buttonHeight
+        );
+
+
+    let randomX;
+
+    let randomY;
+
+    let validPosition = false;
+
+
+    /*
+        Try different positions until
+        NO does not overlap YES.
+    */
+
+    for (
+        let attempt = 0;
+        attempt < 100;
+        attempt++
+    ) {
+
+        randomX =
+            Math.random() * maxX;
+
+
+        randomY =
+            Math.random() * maxY;
+
+
+        const noRight =
+            randomX + buttonWidth;
+
+
+        const noBottom =
+            randomY + buttonHeight;
+
+
+        const overlap =
+            randomX < yesRight &&
+            noRight > yesLeft &&
+            randomY < yesBottom &&
+            noBottom > yesTop;
+
+
+        if (!overlap) {
+
+            validPosition = true;
+
+            break;
+
+        }
+
+    }
+
+
+    /*
+        Safety fallback.
+        Put NO below YES.
+    */
+
+    if (!validPosition) {
+
+        randomX =
+            Math.max(
+                0,
+                (areaWidth - buttonWidth) / 2
+            );
+
+
+        randomY =
+            yesBottom + 20;
+
+
+        if (
+            randomY + buttonHeight >
+            areaHeight
+        ) {
+
+            randomY = 5;
+
+        }
+
+    }
+
+
+    noButton.style.left =
+        randomX + "px";
+
+
+    noButton.style.top =
+        randomY + "px";
+
+
+    noButton.style.transform =
+        "none";
+
 }
 
 
-/*
-Desktop:
-Move when mouse gets close.
-
-Mobile:
-Move when she touches the button.
-*/
+/* =========================================
+   DESKTOP
+========================================= */
 
 noButton.addEventListener(
     "mouseenter",
     moveNoButton
 );
+
+
+/* =========================================
+   MOBILE
+========================================= */
 
 noButton.addEventListener(
     "touchstart",
@@ -566,8 +1311,15 @@ noButton.addEventListener(
         moveNoButton();
 
     },
-    { passive: false }
+    {
+        passive: false
+    }
 );
+
+
+/* =========================================
+   IF CLICKED
+========================================= */
 
 noButton.addEventListener(
     "click",
@@ -581,113 +1333,414 @@ noButton.addEventListener(
 );
 
 
-/* =========================
-   DATE CONFIRMATION
-========================= */
-
-function confirmDate() {
-
-    const dateInput =
-        document.getElementById("dateInput");
-
-    if (!dateInput.value) {
-
-        alert(
-            "Heyyy 😏 You forgot to choose a date!"
-        );
-
-        return;
-    }
-
-    const selected =
-        new Date(dateInput.value + "T00:00:00");
-
-    const options = {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    };
-
-    const formattedDate =
-        selected.toLocaleDateString(
-            "en-US",
-            options
-        );
-
-    document.getElementById(
-        "selectedDate"
-    ).textContent = formattedDate;
-
-    showPage(3);
-
-    createConfetti();
-}
-
-
-/* =========================
-   CONFETTI
-========================= */
-
-function createConfetti() {
-
-    const symbols = [
-        "💖",
-        "💕",
-        "💗",
-        "✨",
-        "💓",
-        "🎉",
-        "🥰"
-    ];
-
-    for (let i = 0; i < 70; i++) {
-
-        const confetti =
-            document.createElement("div");
-
-        confetti.className = "confetti";
-
-        confetti.innerHTML =
-            symbols[
-                Math.floor(
-                    Math.random() * symbols.length
-                )
-            ];
-
-        confetti.style.left =
-            Math.random() * 100 + "vw";
-
-        confetti.style.animationDuration =
-            (2 + Math.random() * 3) + "s";
-
-        confetti.style.fontSize =
-            (10 + Math.random() * 18) + "px";
-
-        document.body.appendChild(confetti);
-
-        setTimeout(() => {
-            confetti.remove();
-        }, 5000);
-    }
-}
-
-
-/* =========================
-   SET MINIMUM DATE
-   Prevent selecting past dates
-========================= */
+/* =========================================
+   DATE INPUT
+========================================= */
 
 const dateInput =
     document.getElementById("dateInput");
 
-const today =
-    new Date().toISOString().split("T")[0];
 
-dateInput.min = today;
+/*
+    Prevent selecting past dates.
+*/
+
+const today =
+    new Date();
+
+
+const yyyy =
+    today.getFullYear();
+
+
+const mm =
+    String(
+        today.getMonth() + 1
+    ).padStart(2, "0");
+
+
+const dd =
+    String(
+        today.getDate()
+    ).padStart(2, "0");
+
+
+const todayString =
+    `${yyyy}-${mm}-${dd}`;
+
+
+dateInput.min =
+    todayString;
+
+
+/* =========================================
+   CONFIRM DATE
+========================================= */
+
+async function confirmDate() {
+
+    const value =
+        dateInput.value;
+
+
+    /*
+        Make sure date is selected.
+    */
+
+    if (!value) {
+
+        showCuteAlert();
+
+        return;
+
+    }
+
+
+    /*
+        Format selected date.
+    */
+
+    const date =
+        new Date(
+            value + "T00:00:00"
+        );
+
+
+    const options = {
+
+        weekday: "long",
+
+        month: "long",
+
+        day: "numeric",
+
+        year: "numeric"
+
+    };
+
+
+    const formatted =
+        date.toLocaleDateString(
+            "en-US",
+            options
+        );
+
+
+    /*
+        =====================================
+        SEND DATE TO GOOGLE APPS SCRIPT
+        =====================================
+    */
+
+    try {
+
+        await fetch(
+            GOOGLE_SCRIPT_URL,
+            {
+
+                method: "POST",
+
+                mode: "no-cors",
+
+                headers: {
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body: JSON.stringify({
+
+                    date: formatted
+
+                })
+
+            }
+        );
+
+
+        console.log(
+            "Date sent successfully!"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error sending date:",
+            error
+        );
+
+    }
+
+
+    /*
+        =====================================
+        SHOW FINAL PAGE
+        =====================================
+    */
+
+    document.getElementById(
+        "selectedDate"
+    ).textContent =
+        formatted;
+
+
+    showPage(3);
+
+
+    createConfetti();
+
+
+    createHearts();
+
+}
+
+
+/* =========================================
+   CUTE ALERT
+========================================= */
+
+function showCuteAlert() {
+
+    const messages = [
+
+        "Heyyy... pick a date first! 🥹❤️",
+
+        "Our date needs a date! 😂💕",
+
+        "You can't leave me waiting! 😭❤️",
+
+        "Choose a day for us! 🌹"
+
+    ];
+
+
+    alert(
+
+        messages[
+            Math.floor(
+                Math.random() *
+                messages.length
+            )
+        ]
+
+    );
+
+}
+
+
+/* =========================================
+   CONFETTI
+========================================= */
+
+function createConfetti() {
+
+    const items = [
+
+        "💖",
+
+        "💕",
+
+        "💗",
+
+        "✨",
+
+        "💓",
+
+        "🎉",
+
+        "🌹",
+
+        "🥰"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < 80;
+        i++
+    ) {
+
+        const element =
+            document.createElement("div");
+
+
+        element.className =
+            "confetti";
+
+
+        element.textContent =
+            items[
+                Math.floor(
+                    Math.random() *
+                    items.length
+                )
+            ];
+
+
+        element.style.left =
+            Math.random() *
+            100 +
+            "vw";
+
+
+        element.style.fontSize =
+            12 +
+            Math.random() *
+            18 +
+            "px";
+
+
+        element.style.animationDuration =
+            2 +
+            Math.random() *
+            4 +
+            "s";
+
+
+        document.body.appendChild(
+            element
+        );
+
+
+        setTimeout(
+
+            () => element.remove(),
+
+            6000
+
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   EXTRA HEART BURST
+========================================= */
+
+function createHearts() {
+
+    for (
+        let i = 0;
+        i < 20;
+        i++
+    ) {
+
+        const heart =
+            document.createElement("div");
+
+
+        heart.textContent =
+            "❤️";
+
+
+        heart.style.position =
+            "fixed";
+
+
+        heart.style.left =
+            "50%";
+
+
+        heart.style.top =
+            "50%";
+
+
+        heart.style.zIndex =
+            "99";
+
+
+        heart.style.fontSize =
+            "25px";
+
+
+        heart.style.pointerEvents =
+            "none";
+
+
+        document.body.appendChild(
+            heart
+        );
+
+
+        const angle =
+            Math.random() *
+            Math.PI *
+            2;
+
+
+        const distance =
+            100 +
+            Math.random() *
+            250;
+
+
+        const x =
+            Math.cos(angle) *
+            distance;
+
+
+        const y =
+            Math.sin(angle) *
+            distance;
+
+
+        heart.animate(
+
+            [
+
+                {
+
+                    transform:
+                        "translate(-50%,-50%) scale(0)",
+
+                    opacity: 1
+
+                },
+
+                {
+
+                    transform:
+                        `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.5)`,
+
+                    opacity: 0
+
+                }
+
+            ],
+
+            {
+
+                duration:
+                    1200 +
+                    Math.random() *
+                    800,
+
+                easing:
+                    "ease-out"
+
+            }
+
+        );
+
+
+        setTimeout(
+
+            () => heart.remove(),
+
+            2200
+
+        );
+
+    }
+
+}
 
 </script>
 
 </body>
 </html>
-```
